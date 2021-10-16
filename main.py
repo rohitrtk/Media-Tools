@@ -9,18 +9,32 @@ from webptools import dwebp
 DEFAULT_QUALITY = 80
 DEFAULT_IMG_EXT = 'jpg'
 
-# Clamps an integer between a minimum value and a maximum value
-def clamp(value, minValue=0, maxValue=100):
+def clamp(value: int, minValue: int=0, maxValue: int=100) -> int:
+	"""
+	Returns an integer clamped between the minimum and maximum values.
+	>>> clamp(50)
+	50
+	>>> clamp(5, minValue=10)
+	5
+	"""
 	return max(minValue, min(value, maxValue))
 
-def _cwebp(input, output, quality):
+def _cwebp(input: str, output: str, quality: int) -> None:
+	"""
+	Runs the cwebp function and displays its output to console.
+	"""
 	print(cwebp(input_image=input, output_image=output, option='-q {0}'.format(quality), logging='-v'))
 
-def _dwebp(input, output):
+def _dwebp(input: str, output: str) -> None:
+	"""
+	Runs the dwebp function and displays its output to console.
+	"""
 	print(dwebp(input_image=input, output_image=output, option='-o', logging='-v'))
 
-# Begins the encoding process from w/e file type to .webp
-def begin_encode():
+def begin_encode() -> None:
+	"""
+	Begins the encoding process from w/e file type to webp.
+	"""
 	input_path = input('Please specify the file or directory to convert to webp.\n')
 	quality 	 = input('Please specify an image quality between 0 and 100, or leave blank to use the default of 80.\n')
 	if quality:
@@ -32,6 +46,7 @@ def begin_encode():
 	else:
 		quality = DEFAULT_QUALITY
 
+	# Number of files that have been encoded
 	encoded = 0
 
 	# Handle file
@@ -62,8 +77,10 @@ def begin_encode():
 
 	print('Succesfully encoded {0} files.'.format(encoded))
 
-# Begins the decoding process from .webp to a specified file type
 def begin_decode():
+	"""
+	Begins the decoding process from webp to the specified file type.
+	"""
 	input_path = input('Please specify the file or directory to convert from webp.\n')
 	output_ext = input('Please specify the output file extension (jpg, png, etc...) or leave blank to use the default of \'jpg\'.\n')
 	
@@ -71,6 +88,7 @@ def begin_decode():
 	if not output_ext:
 		output_ext = DEFAULT_IMG_EXT
 
+	# Number of files decoded
 	decoded = 0
 
 	# Handle file
